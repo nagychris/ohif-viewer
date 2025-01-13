@@ -24,7 +24,7 @@
     "build:viewer:ci": "cross-env NODE_ENV=production PUBLIC_URL=/ APP_CONFIG=config/netlify.js QUICK_BUILD=false yarn run build",
     "build:viewer:qa": "cross-env NODE_ENV=production APP_CONFIG=config/google.js yarn run build",
     "build:viewer:demo": "cross-env NODE_ENV=production APP_CONFIG=config/demo.js HTML_TEMPLATE=rollbar.html QUICK_BUILD=false yarn run build",
-    "build": "node --max_old_space_size=8096 ./../../node_modules/webpack/bin/webpack.js --progress --config .webpack/webpack.pwa.js",
+    "build": "node --max_old_space_size=8096 ./../../node_modules/webpack/bin/webpack.js --progress --config .webpack/webpack.pwa.js --profile --json",
     "clean": "shx rm -rf dist",
     "clean:deep": "yarn run clean && shx rm -rf node_modules",
     "dev": "cross-env NODE_ENV=development webpack serve --config .webpack/webpack.pwa.js",
@@ -41,7 +41,8 @@
     "test:e2e:serve": "cross-env APP_CONFIG=config/e2e.js yarn start",
     "test:unit": "jest --watchAll",
     "test:unit:ci": "jest --ci --runInBand --collectCoverage",
-    "ci:generateSuccessVersion": "node -p -e \"require('./package.json').version\" > success_version.txt"
+    "ci:generateSuccessVersion": "node -p -e \"require('./package.json').version\" > success_version.txt",
+    "analyze": "webpack-bundle-analyzer dist/stats.json"
   },
   "files": [
     "dist",
@@ -61,14 +62,12 @@
     "@ohif/extension-cornerstone-dicom-seg": "3.10.0-beta.21",
     "@ohif/extension-cornerstone-dicom-sr": "3.10.0-beta.21",
     "@ohif/extension-default": "3.10.0-beta.21",
-    "@ohif/extension-dicom-microscopy": "3.10.0-beta.21",
     "@ohif/extension-dicom-pdf": "3.10.0-beta.21",
     "@ohif/extension-dicom-video": "3.10.0-beta.21",
     "@ohif/extension-test": "3.10.0-beta.21",
     "@ohif/i18n": "3.10.0-beta.21",
     "@ohif/mode-basic-dev-mode": "3.10.0-beta.21",
     "@ohif/mode-longitudinal": "3.10.0-beta.21",
-    "@ohif/mode-microscopy": "3.10.0-beta.21",
     "@ohif/mode-test": "3.10.0-beta.21",
     "@ohif/ui": "3.10.0-beta.21",
     "@ohif/ui-next": "3.10.0-beta.21",
@@ -105,9 +104,11 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/node": "^20.12.12",
     "identity-obj-proxy": "3.0.x",
     "lodash": "^4.17.21",
-    "tailwindcss": "3.2.4"
+    "tailwindcss": "3.2.4",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

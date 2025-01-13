@@ -62,6 +62,9 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
   const isQuickBuild = QUICK_BUILD === 'true';
 
   const config = {
+    watchOptions: {
+      ignored: ['node_modules', '**/node_modules', '**/**/node_modules/**'],
+    },
     mode: isProdBuild ? 'production' : 'development',
     devtool: isProdBuild ? 'source-map' : 'cheap-module-source-map',
     entry: ENTRY,
@@ -190,6 +193,9 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
         path.resolve(__dirname, '../../../node_modules'),
         path.resolve(__dirname, '../platform/app/node_modules'),
         path.resolve(__dirname, '../platform/ui/node_modules'),
+
+        path.resolve(__dirname, '../mediaire/extensions/viewer/node_modules'),
+        path.resolve(__dirname, '../mediaire/modes/default/node_modules'),
         SRC_DIR,
       ],
       // Attempt to resolve these extensions in order.

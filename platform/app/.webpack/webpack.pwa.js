@@ -10,6 +10,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // ~~ Directories
 const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
@@ -78,9 +79,13 @@ module.exports = (env, argv) => {
         // Hoisted Yarn Workspace Modules
         path.resolve(__dirname, '../../../node_modules'),
         SRC_DIR,
+        path.resolve(__dirname, 'mediaire/extensions/viewer/node_modules'),
+        path.resolve(__dirname, 'mediaire/modes/default/node_modules'),
       ],
     },
     plugins: [
+      // Analyze bundle sizes
+      new BundleAnalyzerPlugin(),
       // For debugging re-renders
       // MillionLint.webpack(),
       new Dotenv(),
@@ -201,6 +206,7 @@ module.exports = (env, argv) => {
   }
 
   mergedConfig.watchOptions = {
+    ...baseConfig.watchOptions,
     ignored: /node_modules\/@cornerstonejs/,
   };
 

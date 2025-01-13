@@ -52,12 +52,12 @@ function App({
      * Hosted at: https://ohif.org/where-i-host-the/viewer/
      * Value: `/where-i-host-the/viewer/`
      * */
-    routerBaseName: '/',
+    routerBaseName: '/viewer',
     /**
      *
      */
     showLoadingIndicator: true,
-    showStudyList: true,
+    showStudyList: false,
     oidc: [],
     extensions: [],
   },
